@@ -2,4 +2,4 @@
 
 ## First exercise with GIT
 
-Gerenate token
+Eclipse test
