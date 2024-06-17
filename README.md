@@ -2,4 +2,4 @@
 
 ## First exercise with GIT
 
-Try to connect to Eclipse test
+Gerenate token
