@@ -1,5 +1,5 @@
 package com.example;
 
-public interface PersonalRepository extends Repository<Persona, Integer>{
+public interface PersonaRepository extends Repository<Persona, Integer>{
 
 }
