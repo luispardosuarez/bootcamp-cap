@@ -133,8 +133,8 @@ class CalculadoraTest {
 			Calculadora calculadora = mock(Calculadora.class);
 			when(calculadora.add(anyDouble(), anyDouble())).thenReturn(3.0).thenReturn(4.0);
 			
-			assertEquals(3, calculadora.add(2, 2));
-			assertEquals(3, calculadora.add(12.0, 2));
+			assertEquals(3, calculadora.add(2.0, 2.0));
+			assertEquals(4, calculadora.add(12.0, 2));
 			assertEquals(4, calculadora.add(1.0, 2.0));
 		}
 	}
