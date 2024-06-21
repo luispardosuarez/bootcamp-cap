@@ -1,5 +1,7 @@
 # bootcamp-cap
 
-## First exercise with GIT
+## Bootcamp Java Capgemini
 
-Eclipse test
+Starting with GIT basics.
+
+Now connecting to Eclipse workspace.
