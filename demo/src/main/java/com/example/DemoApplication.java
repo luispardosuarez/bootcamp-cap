@@ -102,14 +102,11 @@ public class DemoApplication implements CommandLineRunner {
 			} catch (JsonProcessingException e) {
 				e.printStackTrace();
 			}
-			
-			dao.findAll(PageRequest.of(3, 10));
 		});
 		
 		
 	}
 		
-
 
 	/*
 	@Autowired
