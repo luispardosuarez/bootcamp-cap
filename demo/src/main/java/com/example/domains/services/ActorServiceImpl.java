@@ -62,25 +62,35 @@ public class ActorServiceImpl implements ActorService {
 	public Actor add(Actor item) throws DuplicateKeyException, InvalidDataException {
 		if(item == null)
 			throw new InvalidDataException("No puede ser nulo");
-		return null;
+		if(item.isInvalid())
+			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
+		if(item.getActorId() != 0 && dao.existsById(item.getActorId()))
+			throw new DuplicateKeyException("Ya existe");
+		return dao.save(item);
 	}
 
 	@Override
 	public Actor modify(Actor item) throws NotFoundException, InvalidDataException {
-		// TODO Auto-generated method stub
-		return null;
+		if(item == null)
+			throw new InvalidDataException("No puede ser nulo");
+		if(item.isInvalid())
+			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
+		if(!dao.existsById(item.getActorId()))
+			throw new NotFoundException();
+		return dao.save(item);
 	}
 
 	@Override
 	public void delete(Actor item) throws InvalidDataException {
-		// TODO Auto-generated method stub
+		if(item == null)
+			throw new InvalidDataException("No puede ser nulo");
+		dao.delete(item);
 		
 	}
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
-		
+		dao.deleteById(id);	
 	}
 
 	@Override
