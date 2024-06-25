@@ -9,14 +9,15 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.example.domains.entities.Actor;
 
-public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpecificationExecutor{
-   List<Actor> findTop5ByLastNameStartingWithOrderByFirstNameDesc(String prefijo);
-   List<Actor> findTop5ByLastNameStartingWith(String prefijo, Sort orderBy);
-   
-   List<Actor> findByActorIdGreaterThanEqual(int actorId);
-   @Query(value= "from Actor a where a.actorId >= ?1")
-   List<Actor> findByJPQL(int actorId);
-   @Query(value= "SELECT * FROM actor WHERE actor_id >= ?1", nativeQuery = true)
-   List<Actor> findBySQL(int id);
 
+public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpecificationExecutor<Actor> {
+	List<Actor> findTop5ByLastNameStartingWithOrderByFirstNameDesc(String prefijo);
+	List<Actor> findTop5ByLastNameStartingWith(String prefijo, Sort orderBy);
+	
+	List<Actor> findByActorIdGreaterThanEqual(int actorId);
+	@Query(value = "from Actor a where a.actorId >= ?1")
+	List<Actor> findByJPQL(int actorId);
+	@Query(value = "SELECT * FROM actor WHERE actor_id >= ?1", nativeQuery = true)
+	List<Actor> findBySQL(int id);
+	
 }
