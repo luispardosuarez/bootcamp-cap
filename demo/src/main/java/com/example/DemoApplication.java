@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 
 import com.example.domains.contracts.repositories.ActorRepository;
 import com.example.domains.entities.Actor;
+import com.example.domains.entities.models.ActorDTO;
 import com.example.ioc.Entorno;
 import com.example.ioc.Rango;
 import com.example.ioc.Saluda;
@@ -62,12 +63,16 @@ public class DemoApplication implements CommandLineRunner {
 //			System.out.println(actor);
 //			actor.getFilmActors().forEach(f -> System.out.println(f.getFilm().getTitle()));
 //		}
-		var actor = new Actor(0, null, "12345678Z");
+//		var actor = new Actor(0, null, "12345678Z");
 //		if(actor.isValid()) {
-		System.out.println(dao.save(actor));
+//		System.out.println(dao.save(actor));
 //		} else {
 //			actor.getErrors().forEach(System.out::println);
 //		}
+		dao.findAll().forEach(item -> System.out.println(ActorDTO.from(item)));
+		var actor = new ActorDTO(0, "FROM", "DTO");
+		dao.save(ActorDTO.from(actor));
+		dao.findAll().forEach(item -> System.out.println(ActorDTO.from(item)));
 	}
 
 	/*
