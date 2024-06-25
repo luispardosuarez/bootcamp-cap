@@ -9,6 +9,7 @@ public class ActorOtroDTO implements Serializable {
 	private String apellidos;
 	
 	public ActorOtroDTO(int actorId, String firstName, String lastName) {
+		super();
 		this.id = actorId;
 		this.nombre = firstName;
 		this.apellidos = lastName;

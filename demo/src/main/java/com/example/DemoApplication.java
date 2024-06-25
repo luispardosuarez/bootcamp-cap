@@ -15,6 +15,9 @@ import com.example.domains.entities.models.ActorShort;
 import com.example.ioc.Entorno;
 import com.example.ioc.Rango;
 import com.example.ioc.Saluda;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import jakarta.transaction.Transactional;
 
@@ -80,9 +83,33 @@ public class DemoApplication implements CommandLineRunner {
 //		dao.queryByActorIdGreaterThanEqual(200).forEach(item -> System.out.println(item.getId() + " " + item.getNombre()));
 //		dao.findByActorIdGreaterThanEqual(200, ActorDTO.class).forEach(System.out::println);
 //		dao.findByActorIdGreaterThanEqual(200, ActorShort.class).forEach(item -> System.out.println(item.getId() + " " + item.getNombre()));
-	    dao.findAll(PageRequest.of(3,  10, Sort.by("ActorId"))).forEach(System.out::println);
-	    dao.findByActorIdGreaterThanEqual(200, ActorOtroDTO.class).forEach(item -> System.out.println(item));
+//	    dao.findAll(PageRequest.of(3,  10, Sort.by("ActorId"))).forEach(System.out::println);
+//	    dao.findByActorIdGreaterThanEqual(200, ActorOtroDTO.class).forEach(item -> System.out.println(item));
+//		var serializa = new ObjectMapper();	
+//		dao.findByActorIdGreaterThanEqual(200, ActorDTO.class).forEach(item -> {
+//			try {
+//				System.out.println(serializa.writeValueAsString(item));
+//			} catch (JsonProcessingException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		});
+		
+		var serializa = new XmlMapper();
+		dao.findAll(PageRequest.of(3,  10, Sort.by("ActorId"))).forEach(item -> {
+			try {
+				System.out.println(serializa.writeValueAsString(item));
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+			
+			dao.findAll(PageRequest.of(3, 10));
+		});
+		
+		
 	}
+		
+
 
 	/*
 	@Autowired
@@ -113,4 +140,5 @@ public class DemoApplication implements CommandLineRunner {
 		System.out.println(rango.getMin() + " -> " + rango.getMax());
 	}
 */
+
 }
