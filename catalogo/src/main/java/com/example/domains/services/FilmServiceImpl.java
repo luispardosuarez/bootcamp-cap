@@ -1,28 +1,35 @@
 package com.example.domains.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
-import java.sql.Timestamp;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.example.domains.contracts.repositories.ActorRepository;
-import com.example.domains.contracts.services.ActorService;
+import com.example.domains.contracts.repositories.FilmRepository;
+import com.example.domains.contracts.services.FilmService;
 import com.example.domains.entities.Actor;
+import com.example.domains.entities.Category;
+import com.example.domains.entities.Film;
+import com.example.domains.entities.FilmActor;
+import com.example.domains.entities.FilmCategory;
+import com.example.domains.entities.Language;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 
+import jakarta.transaction.Transactional;
 import lombok.NonNull;
 
 @Service
-public class ActorServiceImpl implements ActorService {
+public class FilmServiceImpl implements FilmService {
 	@Autowired
-	ActorRepository dao;
+	FilmRepository dao;
 
 	@Override
 	public <T> List<T> getByProjection(Class<T> type) {
@@ -40,54 +47,62 @@ public class ActorServiceImpl implements ActorService {
 	}
 
 	@Override
-	public Iterable<Actor> getAll(Sort sort) {
+	public Iterable<Film> getAll(Sort sort) {
 		return dao.findAll(sort);
 	}
 
 	@Override
-	public Page<Actor> getAll(Pageable pageable) {
+	public Page<Film> getAll(Pageable pageable) {
 		return dao.findAll(pageable);
 	}
 
 	@Override
-	public List<Actor> getAll() {
+	public List<Film> getAll() {
 		return dao.findAll();
 	}
 
 	@Override
-	public Optional<Actor> getOne(Integer id) {
+	public Optional<Film> getOne(Integer id) {
 		return dao.findById(id);
 	}
 
 	@Override
-	public Actor add(Actor item) throws DuplicateKeyException, InvalidDataException {
+	@Transactional
+	public Film add(Film item) throws DuplicateKeyException, InvalidDataException {
 		if(item == null)
 			throw new InvalidDataException("No puede ser nulo");
 		if(item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
-		if(dao.existsById(item.getActorId()))
+		if(dao.existsById(item.getFilmId()))
 			throw new DuplicateKeyException(item.getErrorsMessage());
-		
-		return dao.save(item);
+		var actores = item.getActors();
+		var categorias = item.getCategories();
+		item.clearActors();
+		item.clearCategories();
+		var newItem = dao.save(item);
+		newItem.setActors(actores);
+		newItem.setCategories(categorias);
+		return dao.save(newItem);
 	}
 
 	@Override
-	public Actor modify(Actor item) throws NotFoundException, InvalidDataException {
+	@Transactional
+	public Film modify(Film item) throws NotFoundException, InvalidDataException {
 		if(item == null)
 			throw new InvalidDataException("No puede ser nulo");
 		if(item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
-		if(!dao.existsById(item.getActorId()))
+		var leido = dao.findById(item.getFilmId());
+		if(leido.isEmpty())
 			throw new NotFoundException();
-		
-		return dao.save(item);
+		return dao.save(item.merge(leido.get()));
 	}
 
 	@Override
-	public void delete(Actor item) throws InvalidDataException {
+	public void delete(Film item) throws InvalidDataException {
 		if(item == null)
 			throw new InvalidDataException("No puede ser nulo");
-		deleteById(item.getActorId());
+		deleteById(item.getFilmId());
 	}
 
 	@Override
@@ -96,7 +111,7 @@ public class ActorServiceImpl implements ActorService {
 	}
 
 	@Override
-	public List<Actor> novedades(@NonNull Timestamp fecha) {
+	public List<Film> novedades(@NonNull Timestamp fecha) {
 		return dao.findByLastUpdateGreaterThanEqualOrderByLastUpdate(fecha);
 	}
 

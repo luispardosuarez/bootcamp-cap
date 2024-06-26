@@ -1,18 +1,18 @@
 package com.example.domains.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
-import java.sql.Timestamp;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.example.domains.contracts.repositories.ActorRepository;
-import com.example.domains.contracts.services.ActorService;
-import com.example.domains.entities.Actor;
+import com.example.domains.contracts.repositories.LanguageRepository;
+import com.example.domains.contracts.services.LanguageService;
+import com.example.domains.entities.Language;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
@@ -20,74 +20,49 @@ import com.example.exceptions.NotFoundException;
 import lombok.NonNull;
 
 @Service
-public class ActorServiceImpl implements ActorService {
+public class LanguageServiceImpl implements LanguageService {
 	@Autowired
-	ActorRepository dao;
+	LanguageRepository dao;
 
 	@Override
-	public <T> List<T> getByProjection(Class<T> type) {
-		return dao.findAllBy(type);
-	}
-
-	@Override
-	public <T> Iterable<T> getByProjection(Sort sort, Class<T> type) {
-		return dao.findAllBy(sort, type);
-	}
-
-	@Override
-	public <T> Page<T> getByProjection(Pageable pageable, Class<T> type) {
-		return dao.findAllBy(pageable, type);
-	}
-
-	@Override
-	public Iterable<Actor> getAll(Sort sort) {
-		return dao.findAll(sort);
-	}
-
-	@Override
-	public Page<Actor> getAll(Pageable pageable) {
-		return dao.findAll(pageable);
-	}
-
-	@Override
-	public List<Actor> getAll() {
+	public List<Language> getAll() {
 		return dao.findAll();
 	}
 
 	@Override
-	public Optional<Actor> getOne(Integer id) {
+	public Optional<Language> getOne(Integer id) {
 		return dao.findById(id);
 	}
 
 	@Override
-	public Actor add(Actor item) throws DuplicateKeyException, InvalidDataException {
+	public Language add(Language item) throws DuplicateKeyException, InvalidDataException {
 		if(item == null)
 			throw new InvalidDataException("No puede ser nulo");
 		if(item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
-		if(dao.existsById(item.getActorId()))
+		if(dao.existsById(item.getLanguageId()))
 			throw new DuplicateKeyException(item.getErrorsMessage());
 		
 		return dao.save(item);
 	}
 
 	@Override
-	public Actor modify(Actor item) throws NotFoundException, InvalidDataException {
+	public Language modify(Language item) throws NotFoundException, InvalidDataException {
 		if(item == null)
 			throw new InvalidDataException("No puede ser nulo");
 		if(item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
-		if(!dao.existsById(item.getActorId()))
+		if(!dao.existsById(item.getLanguageId()))
 			throw new NotFoundException();
 		
 		return dao.save(item);
 	}
 
 	@Override
-	public void delete(Actor item) throws InvalidDataException {
+	public void delete(Language item) throws InvalidDataException {
 		if(item == null)
 			throw new InvalidDataException("No puede ser nulo");
-		deleteById(item.getActorId());
+		deleteById(item.getLanguageId());
 	}
 
 	@Override
@@ -96,7 +71,7 @@ public class ActorServiceImpl implements ActorService {
 	}
 
 	@Override
-	public List<Actor> novedades(@NonNull Timestamp fecha) {
+	public List<Language> novedades(@NonNull Timestamp fecha) {
 		return dao.findByLastUpdateGreaterThanEqualOrderByLastUpdate(fecha);
 	}
 
