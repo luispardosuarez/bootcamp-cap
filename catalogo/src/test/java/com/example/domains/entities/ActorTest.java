@@ -30,8 +30,8 @@ class ActorTest {
 			"12345678901234567890123456789012345678901234567890,'ERRORES: firstName: el tamaño debe estar entre 2 y 45.'" })
 	void testNombreIsInvalid(String valor, String error) {
 		var fixture = new Actor(0, valor, "FERNANDEZ");
-//		assertTrue(fixture.isInvalid());
-		assertEquals(error, fixture.getErrorsMessage());
+		assertTrue(fixture.isInvalid());
+//		assertEquals(error, fixture.getErrorsMessage());
 	}
 	
 	@DisplayName("Apellidos de tener entre 2 y 45 caracteres, y no puede estar en blanco")

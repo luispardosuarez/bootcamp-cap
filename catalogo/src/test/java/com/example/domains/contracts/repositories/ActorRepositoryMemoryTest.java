@@ -40,7 +40,7 @@ class ActorRepositoryMemoryTest {
 	void testGetAll_isNotEmpty() {
 		var rslt = dao.findAll();
 		assertThat(rslt.size()).isEqualTo(3);
-		assertThat(dao.findTop5ByLastNameStartingWithOrderByFirstNameDesc("C").size()).isEqualTo(1);
+		assertThat(dao.findTop5ByLastNameStartingWithOrderByFirstNameDesc("S").size()).isEqualTo(1);
 		assertThat(dao.findByJPQL(1).size()).isEqualTo(3);
 	}
 
