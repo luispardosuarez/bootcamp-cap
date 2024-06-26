@@ -1,7 +1,5 @@
 package com.example.domains.core.validations;
 
-import java.time.LocalDate;
-
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

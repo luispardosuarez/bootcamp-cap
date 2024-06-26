@@ -9,6 +9,7 @@ import java.sql.Timestamp;
  * The persistent class for the film_category database table.
  * 
  */
+
 @Entity
 @Table(name="film_category")
 @NamedQuery(name="FilmCategory.findAll", query="SELECT f FROM FilmCategory f")

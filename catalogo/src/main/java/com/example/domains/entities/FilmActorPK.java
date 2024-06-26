@@ -7,6 +7,7 @@ import jakarta.persistence.*;
  * The primary key class for the film_actor database table.
  * 
  */
+
 @Embeddable
 public class FilmActorPK implements Serializable {
 	//default serial version id, required for serializable classes.

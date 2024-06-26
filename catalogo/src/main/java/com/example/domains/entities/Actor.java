@@ -3,7 +3,6 @@ package com.example.domains.entities;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 import java.sql.Timestamp;
@@ -11,16 +10,15 @@ import java.util.List;
 import java.util.Objects;
 
 import com.example.domains.core.entities.EntityBase;
-import com.example.domains.core.validations.NIF;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
  * The persistent class for the actor database table.
  * 
  */
+
 @Entity
 @Table(name="actor")
 @NamedQuery(name="Actor.findAll", query="SELECT a FROM Actor a")
@@ -35,13 +33,11 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 	@Column(name="first_name", nullable=false, length=45)
 	@NotBlank
 	@Size(max=45, min=2)
-//	@Pattern(regexp = "^[A-Z]+$", message = "tiene que estar en mayusculas")
 	private String firstName;
 
 	@Column(name="last_name", nullable=false, length=45)
 	@NotBlank
 	@Size(max=45, min=2)
-//	@NIF
 	private String lastName;
 
 	@Column(name="last_update", insertable=false, updatable=false, nullable=false)

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  * The persistent class for the film_actor database table.
  * 
  */
+
 @Entity
 @Table(name="film_actor")
 @NamedQuery(name="FilmActor.findAll", query="SELECT f FROM FilmActor f")
