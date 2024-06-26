@@ -8,7 +8,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
 import com.example.domains.core.entities.EntityBase;
@@ -325,7 +324,7 @@ public class Film extends EntityBase<Film> implements Serializable {
 		filmCategories = new ArrayList<FilmCategory>() ;
 	}
 	public void addCategory(Category item) {
-		FilmCategory filmCategory = new FilmCategory(this, item);
+		FilmCategory filmCategory = new FilmCategory();
 		filmCategories.add(filmCategory);
 	}
 	public void addCategory(int id) {
@@ -367,10 +366,6 @@ public class Film extends EntityBase<Film> implements Serializable {
 		target.replacementCost = replacementCost;
 		target.rating = rating;
 		
-		// Delete unnecessary actors
-		target.getActors().stream()
-			.filter(item -> !getActors().contains(item))
-			.forEach(item -> target.removeActor(item));
 		
 		// Add missing actor
 		getActors().stream()
@@ -386,6 +381,14 @@ public class Film extends EntityBase<Film> implements Serializable {
 		getCategories().stream()
 			.filter(item -> !target.getCategories().contains(item))
 			.forEach(item -> target.addCategory(item));
+		
+		// Delete unnecessary actors
+		target.getActors().stream()
+			.filter(item -> !getActors().contains(item))
+			.forEach(item -> target.removeActor(item));
+		
 		return target;
+		
+		
 	}
 }
