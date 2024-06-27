@@ -9,10 +9,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
-
 import lombok.Value;
 
+
 class EntityBaseTest {
+	
+    
 	@Value
 	class Dummy extends EntityBase<Dummy> {
 		@Positive
@@ -26,8 +28,8 @@ class EntityBaseTest {
 	class OK {
 		@Test
 		void isValid() {
-			var dummy = new Dummy(1, "algo");
-			assertAll("valido", 
+			var dummy = new Dummy(1, "something");
+			assertAll("valid", 
 					() -> assertTrue(dummy.isValid(), "isValid"),
 					() -> assertFalse(dummy.isInvalid(), "isInvalid"),
 					() -> assertEquals(0, dummy.getErrors().size(), "getErrors"),
@@ -42,12 +44,12 @@ class EntityBaseTest {
 		@Test
 		void isInvalid() {
 			var dummy = new Dummy(-1, " ");
-			assertAll("invalido", 
+			assertAll("invalid", 
 					() -> assertFalse(dummy.isValid(), "isValid"),
 					() -> assertTrue(dummy.isInvalid(), "isInvalid"),
 					() -> assertEquals(3, dummy.getErrors().size(), "getErrors"),
 					() -> assertEquals(2, dummy.getErrorsFields().size(), "getErrorsFields"),
-					() -> assertEquals("ERRORES: id: debe ser mayor que 0. nombre: el tamaño debe estar entre 2 y 10, no debe estar vacío.", dummy.getErrorsMessage(), "getErrorsMessage")
+					() -> assertEquals("ERRORES: id: must be greater than 0. nombre: must not be blank, size must be between 2 and 10.", dummy.getErrorsMessage(), "getErrorsMessage")
 					);
 		}
 		
