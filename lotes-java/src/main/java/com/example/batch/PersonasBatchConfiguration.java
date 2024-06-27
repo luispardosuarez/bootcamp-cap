@@ -56,7 +56,6 @@ public class PersonasBatchConfiguration {
 				.build();
 	}
 	
-	
 	@Bean
 	public Step importCSV2DBStep1(JdbcBatchItemWriter<Persona> personaDBItemWriter) {
 	return new StepBuilder("importCSV2DBStep1", jobRepository)
