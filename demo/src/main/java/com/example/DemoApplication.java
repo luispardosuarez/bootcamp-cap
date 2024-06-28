@@ -4,13 +4,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.oxm.jaxb.Jaxb2Marshaller;
-import org.springframework.ws.client.core.WebServiceTemplate;
-import org.springframework.ws.soap.client.core.SoapActionCallback;
 
 import com.example.domains.contracts.proxies.CalculatorProxy;
-import com.example.webservices.schemas.calculator.AddRequest;
-import com.example.webservices.schemas.calculator.AddResponse;
 
 
 @SpringBootApplication
@@ -29,23 +24,37 @@ public class DemoApplication implements CommandLineRunner {
 //		srv.getByProjection(ActorDTO.class).forEach(System.out::println);
 	}
 	
-//	@Bean
-//	CommandLineRunner lookup(CalculatorProxy client) {
-//		return args -> { System.err.println("Calculo remoto --> " + client.add(2, 3)); };
-//	}
-	
 	@Bean
-	CommandLineRunner lookup(Jaxb2Marshaller marshaller) {
-		return args -> {		
-			WebServiceTemplate ws = new WebServiceTemplate(marshaller);
-			var request = new AddRequest();
-			request.setOp1(2);
-			request.setOp2(3);
-			var response = (AddResponse) ws.marshalSendAndReceive("http://localhost:8090/ws/calculator", 
-					 request, new SoapActionCallback("http://example.com/webservices/schemas/calculator"));
-			System.err.println("Calculo remoto --> " + response.getAddResult());
+	CommandLineRunner lookup(CalculatorProxy client) {
+		return args -> { 
+			System.err.println("Suma remoto --> " + client.add(2, 3)); 
+			System.err.println("Resta remoto --> " + client.substract(3, 1)); 
+			System.err.println("Multiplicación remoto --> " + client.multiply(3, 2));
+			System.err.println("División remoto --> " + client.divide(10, 2));
+			
 		};
 	}
+	
+//	@Bean
+//	CommandLineRunner lookup(Jaxb2Marshaller marshaller) {
+//		return args -> {		
+//			WebServiceTemplate ws = new WebServiceTemplate(marshaller);
+//			var request = new AddRequest();
+//			request.setOp1(2);
+//			request.setOp2(3);
+//			var response = (AddResponse) ws.marshalSendAndReceive("http://localhost:8090/ws/calculator", 
+//					 request, new SoapActionCallback("http://example.com/webservices/schemas/calculator"));
+//			System.err.println("Calculo remoto --> " + response.getAddResult());
+//			
+//			var request = new SubRequest();
+//			request.setOp1(2);
+//			request.setOp2(3);
+//			var response = (SubResponse) ws.marshalSendAndReceive("http://localhost:8090/ws/calculator", 
+//					 request, new SoapActionCallback("http://example.com/webservices/schemas/calculator"));
+//			System.err.println("Calculo remoto --> " + response.getSubResult());
+//			
+//		};
+//	}
 
 	/*
 	@Autowired
