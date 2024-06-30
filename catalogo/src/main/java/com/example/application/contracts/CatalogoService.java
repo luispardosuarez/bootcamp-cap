@@ -1,5 +1,12 @@
 package com.example.application.contracts;
 
-public class CatalogoService {
+import java.sql.Timestamp;
+
+import com.example.application.models.NovedadesDTO;
+
+
+public interface CatalogoService {
+
+	NovedadesDTO novedades(Timestamp fecha);
 
 }

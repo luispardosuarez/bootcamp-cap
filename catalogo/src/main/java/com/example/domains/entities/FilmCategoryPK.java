@@ -21,6 +21,9 @@ public class FilmCategoryPK implements Serializable {
 
 	public FilmCategoryPK() {
 	}
+	public FilmCategoryPK(int filmId2, int categoryId2) {
+		// TODO Auto-generated constructor stub
+	}
 	public int getFilmId() {
 		return this.filmId;
 	}

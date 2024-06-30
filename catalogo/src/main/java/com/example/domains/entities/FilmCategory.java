@@ -66,5 +66,12 @@ public class FilmCategory implements Serializable {
 	public void setFilm(Film film) {
 		this.film = film;
 	}
+	
+	@PrePersist
+	void prePersiste() {
+		if (id == null) {
+			setId(new FilmCategoryPK(film.getFilmId(), category.getCategoryId()));
+		}
+	}
 
 }

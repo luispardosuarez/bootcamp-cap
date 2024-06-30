@@ -98,4 +98,9 @@ public class ActorServiceImpl implements ActorService {
 		
 	}
 	
+	@Override
+	public List<Actor> novedades(Timestamp fecha) {
+		return dao.findByLastUpdateGreaterThanEqualOrderByLastUpdate(fecha);
+	}
+	
 }
