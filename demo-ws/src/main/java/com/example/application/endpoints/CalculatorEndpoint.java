@@ -1,5 +1,8 @@
 package com.example.application.endpoints;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -48,6 +51,10 @@ public class CalculatorEndpoint {
 			var result = new DivResponse();
 			result.setDivResult(request.getOp1() / request.getOp2());
 			return result;
+		}
+		
+		private double redondea(double o) {
+			return (new BigDecimal(o)).setScale(16, RoundingMode.HALF_UP).doubleValue();
 		}
 
 }
