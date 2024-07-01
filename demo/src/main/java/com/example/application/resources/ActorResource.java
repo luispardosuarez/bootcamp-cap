@@ -66,7 +66,7 @@ public class ActorResource {
 	
 	@DeleteMapping(path = "/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable int id) throws NotFoundException, InvalidDataException, BadRequestException {
+	public void delete(@PathVariable int id) {
 		srv.deleteById(id);
 	}
 	
