@@ -44,7 +44,7 @@ public class ActorResource {
 		if("short".equals(modo))
 		    return srv.getByProjection(ActorShort.class);
 		else
-			return srv.getAll() /*getByProjection(ActorDTO.class)*/;
+			return srv.getAll();
 	}
 	
 	@GetMapping(params = "page")
@@ -105,3 +105,4 @@ public class ActorResource {
 	}
 	
  }
+
